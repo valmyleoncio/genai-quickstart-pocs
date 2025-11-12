@@ -54,7 +54,7 @@ def generate_background_research_query(
         template=prompt_template,
         input_variables=input_arguments.keys(),
     )
-    llm = ChatBedrockConverse(model="anthropic.claude-3-haiku-20240307-v1:0")
+    llm = ChatBedrockConverse(model="us.amazon.nova-pro-v1:0")
     chain = prompt | llm | parser
     if write_callback:
         write_callback("Generating background research wiki query")
@@ -129,7 +129,7 @@ def generate_powerpoint_sections(
         partial_variables={"format_instructions": parser.get_format_instructions()},
         input_variables=input_arguments.keys(),
     )
-    llm = ChatBedrockConverse(model="anthropic.claude-3-haiku-20240307-v1:0")
+    llm = ChatBedrockConverse(model="us.amazon.nova-pro-v1:0")
     chain = prompt | llm | parser
     logger.info("Generating PowerPoint content...")
     if write_callback:
@@ -213,7 +213,7 @@ def generate_base_slides_for_sections(
         partial_variables={"format_instructions": parser.get_format_instructions()},
         input_variables=input_arguments.keys(),
     )
-    llm = ChatBedrockConverse(model="anthropic.claude-3-haiku-20240307-v1:0")
+    llm = ChatBedrockConverse(model="us.amazon.nova-pro-v1:0")
     chain = prompt | llm | parser
     logger.info("Starting base slide generation for sections.")
     for section in sections:
@@ -253,7 +253,7 @@ def generate_detailed_content_for_slides_in_sections(
     if write_callback:
         write_callback("Generating detailed content for slides in sections")
     parser = PydanticOutputParser(pydantic_object=LLMResponseCompleteSlideContent)
-    llm = ChatBedrockConverse(model="anthropic.claude-3-haiku-20240307-v1:0")
+    llm = ChatBedrockConverse(model="us.amazon.nova-pro-v1:0")
     input_arguments = {
         "topic": topic,
         "additional_info": additional_info,

@@ -14,14 +14,15 @@ from langchain_community.chat_models import BedrockChat
 load_dotenv()
 
 # instantiating the Bedrock client, and passing in the CLI profile
-boto3.setup_default_session(profile_name=os.getenv("profile_name"))
 bedrock = boto3.client("bedrock-runtime", "us-east-1")
 bedrock_agent_runtime = boto3.client("bedrock-agent-runtime", "us-east-1")
 
 # getting the knowledge base id from the env variable
 knowledge_base_id = os.getenv("knowledge_base_id")
+if not knowledge_base_id:
+    raise ValueError("A variável de ambiente KNOWLEDGE_BASE_ID não foi definida.")
 # Models to use
-llm_model = os.getenv("llm_model")  # either "amazon-titan" or "anthropic-claude"
+llm_model = "anthropic-claude"  # either "amazon-titan" or "anthropic-claude"
 
 
 def get_contexts(query, kbId, numberOfResults=5):
@@ -98,7 +99,7 @@ def call_claude(query, retriever):
     # Setting LLM method from the Language BedrockChat library
     llm = BedrockChat(
         client=bedrock,
-        model_id="anthropic.claude-3-haiku-20240307-v1:0",
+        model_id="us.amazon.nova-pro-v1:0",
         model_kwargs=model_kwargs,
     )
 
