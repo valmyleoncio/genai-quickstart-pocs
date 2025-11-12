@@ -99,7 +99,7 @@ def call_claude(query, retriever):
     # Setting LLM method from the Language BedrockChat library
     llm = BedrockChat(
         client=bedrock,
-        model_id="us.amazon.nova-pro-v1:0",
+        model_id="us.anthropic.claude-sonnet-4-20250514-v1:0",
         model_kwargs=model_kwargs,
     )
 
