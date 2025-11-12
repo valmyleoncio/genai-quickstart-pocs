@@ -9,10 +9,13 @@ load_dotenv()
 
 # Getting the variables from the .env file for the guardrail identifier and guardrail version
 guardrail_identifier = os.getenv("guardrail_identifier")
+if not guardrail_identifier:
+    raise ValueError("A variável 'guardrail_identifier' não está definida")
 guardrail_version = os.getenv("guardrail_version")
+if not guardrail_version:
+    raise ValueError("A variável 'guardrail_version' não está definida")
 
 # Instantiating the Bedrock client, and passing in the CLI profile
-boto3.setup_default_session(profile_name=os.getenv("profile_name"))
 bedrock = boto3.client('bedrock-runtime', 'us-east-1', endpoint_url='https://bedrock-runtime.us-east-1.amazonaws.com')
 
 def invoke_model(text):
@@ -62,7 +65,7 @@ def invoke_model(text):
     
     # Invoking Claude3 with the converse API and specified guardrail
     response = bedrock.converse(
-        modelId="anthropic.claude-3-sonnet-20240229-v1:0",
+        modelId="us.anthropic.claude-sonnet-4-20250514-v1:0",
         messages=messages,
         system=system,
         inferenceConfig=inference_config,
